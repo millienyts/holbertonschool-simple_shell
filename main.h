@@ -7,7 +7,6 @@
 #include <string.h>
 
 /* prototype */
-void promp();
-int main();
+
 
 #endif
