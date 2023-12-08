@@ -1,16 +1,16 @@
-NAME
+SH.NAME
 
 	Simple_shell
 
-SYNOPSIS
+SH.SYNOPSIS
 
 	Simple_shell A lightweight and efficient UNIX command-line interpreter
 
-DESCRIPTION
+SH.DESCRIPTION
 
 	The simple_shell is a minimalist UNIX command-line interpreter designed for simplicity and efficiency. It allows users to execute commands, handles command lines with arguments, implements the exit built-in for graceful shell termination, and the env built-in for printing the current environment.
 
-USAGE
+SH.USAGE
 
 	Clean and responsive prompt for user input.
 	Redisplay prompt after executing a command.
@@ -18,9 +18,8 @@ USAGE
 	Error message for an unfound executable with prompt reappearing.
 	Graceful handling of the "end of file" condition (Ctrl+D).
 
-COMMANDS
+SH.COMMANDS
 
-COMMANDS
 access (man 2 access)
 chdir (man 2 chdir)
 close (man 2 close)
@@ -58,11 +57,11 @@ wait3 (man 2 wait3)
 wait4 (man 2 wait4)
 write (man 2 write)11
 
-TESTING
+SH.TESTING
 
 Your shell works seamlessly in both interactive and non-interactive modes:
-
-Interactive mode:
+ 
+SH.INTERACTIVE MODE:
 
 bash
 Copy code
@@ -72,7 +71,7 @@ file1 file2 file3
 ($) exit
 $
 
-Non-interactive mode:
+SH.NON INTERACTIVE MODE:
 
 bash
 Copy code
@@ -80,11 +79,11 @@ $ echo "/bin/ls" | ./simple_shell
 file1 file2 file3
 $
 
-CHECKS
+SH.CHECKS
 
 Ensure your shell passes the provided tests and edge cases outlined in the Checker documentation.
 
-AUTHORS
+SH.AUTHORS
 
 Developed by Millieny Torres Santa and Juan Gabriel Collazo.
 
