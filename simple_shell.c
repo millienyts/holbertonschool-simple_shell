@@ -1,63 +1,72 @@
 #include "shell.h"
 
-int main(void) 
+int main(void)
 {
   char line[MAX_LINE_LENGTH];
-  char *command;
-  extern char **environ;
+  char **args;
+  char *copied_file;
+  char **parse_command(char *line);
 
   pid_t pid;
 
-  while (1) 
-{
+  while (1)
+  {
     /* Display prompt */
     printf("> ");
 
     /* Read user input */
-    if (fgets(line, MAX_LINE_LENGTH, stdin) == NULL) 
-	{
+    if (fgets(line, MAX_LINE_LENGTH, stdin) == NULL)
+    {
       /* Handle end of file (Ctrl+D) */
       printf("\n");
       break;
-	}
+    }
 
-    /* Extract command */
-    line[strcspn(line, "\n")] = '\0';
-    command = strtok(line, " ");
+    line[strcspn(line, "\n")] = '\0'; /* Remove trailing newline */
 
-    /* Check if command is empty */
-    if (command == NULL) 
-	{
+    if (!strcmp(line, "")) { /* Case: Spaces only (small/large/medium) */
       continue;
-	}
+    }
 
-    /* Check if executable exists */
-    if (access(command, X_OK) == -1) 
-	{
-      printf("'%s': command not found\n", command);
-      continue;
-	}
+    /* Split the line into arguments */;
+
+    /* Check for exit command */
+    if (!strcmp(args[0], "exit")) {
+      break;
+    }
+
+    /* Handle special case: copy and execute */
+    if (!strcmp(args[0], "cp")) {
+      int ret = system(line); /* Copy using system() */
+      if (ret != 0) {
+        perror("system");
+        continue;
+      }
+      /* Extract copied filename and remaining arguments */
+      copied_file = strtok(line + 3, " ");
+      args = &copied_file; /* Use remaining args for execve */
+    }
 
     /* Fork a child process */
-    pid = 0;
+    pid = fork();
 
-    if (pid == -1)
-	{
+    if (pid == 0) /* Child process */
+    {
+      /* Execute command with arguments */
+      execvp(args[0], args);
+      perror(args[0]);
+      exit(1);
+    }
+      else if (pid == -1) /* Error */
+    {
       perror("fork");
       exit(1);
-	}
+    }
+      else /* Parent process */
+    {
+      waitpid(pid, NULL, 0); /* Wait for child to finish */
+    }
+  }
 
-    /* Child process */
-    if (pid == 0)
-	{
-      /* Execute command */
-      execve(command, environ, NULL);
-      perror("execve");
-      exit(1);
-	}
-
-    /* Parent process*/
-    waitpid(pid, NULL, 0);
-}
   return 0;
 }
