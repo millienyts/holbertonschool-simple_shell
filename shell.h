@@ -14,6 +14,7 @@ int main(void);
 char *read_line(void);
 char **parse_command(char *line);
 int execute_command(char **args);
+char **parse_command(char *line);
 
 /* Variable prototypes */
 extern char **environ;
