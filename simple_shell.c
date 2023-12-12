@@ -59,6 +59,5 @@ int main(void)
     /* Parent process*/
     waitpid(pid, NULL, 0);
 }
-
   return 0;
 }
