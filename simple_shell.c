@@ -4,6 +4,11 @@ extern char **environ;
 
 #define MAX_ARGS 100
 
+
+/**
+* print_prompt - prints the shell prompt
+* @interactive: indicates whether the shell is running interactively
+*/
 void print_prompt(int interactive)
 {
 	if (interactive) 
@@ -13,7 +18,13 @@ void print_prompt(int interactive)
 	}
 }
 
-int main(void) {
+
+/**
+* main - main function of the shell
+* Return: 0 when the program ends
+*/
+int main(void)
+{
 	int num_tokens, k;
 	size_t i;
 	char *args[MAX_ARGS];
@@ -31,8 +42,8 @@ int main(void) {
 
 	while (1) 
 	{
-	print_prompt(interactive);
-	if (getline(&command, &buffer, stdin) != -1)
+	print_prompt(interactive);	/* Call the function to print the prompt */
+	if (getline(&command, &buffer, stdin) != -1)	/* Read the command line from standard input */
 	{
 		length = strlen(command);
 	if (command[length - 1] == '\n')
@@ -86,14 +97,14 @@ int main(void) {
 		printf("Command not found\n");
 		continue;
 	}
-	pid = fork();
+	pid = fork();	/* Create a child process */
 	if (pid == -1)
 	{
 		perror("fork failed");
 		exit(EXIT_FAILURE);
 	}
 
-	if (pid == 0)
+	if (pid == 0)	/* Code executed by the child process */
 	{
 		if (execve(full_path, args, env) == -1) 
 		{
@@ -101,12 +112,12 @@ int main(void) {
 		exit(EXIT_FAILURE);
 		}
 	}
-	else
+	else	/* Code executed by the parent process */
 	{
-		waitpid(pid, &status, 0);
+		waitpid(pid, &status, 0);	/* Wait for the child process to finish */
 	}
 	} 
-	else 
+	else	/* If a line cannot be read from standard input */
 	{
 	if (!interactive)
 		break;
@@ -114,6 +125,6 @@ int main(void) {
 	break;
         }
 	}
-	free(command);
+	free(command);	/* Free the memory allocated for the command */
 	return 0;
 }
