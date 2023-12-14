@@ -91,8 +91,17 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 	($)
 	($) exit
 	$
+# Examples
+$ ls
 
-# Authors
+file_1	file_2	file_3
 
-Millieny Torres
-Juan Gabriel Collazo
+$ cat file_2
+
+(Display file_2 content)
+
+$
+
+# Authors 
+
+Millieny Torres and Juan Gabriel Collazo
