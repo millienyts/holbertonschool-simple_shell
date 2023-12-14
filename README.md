@@ -91,8 +91,21 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 	($)
 	($) exit
 	$
+# Examples
+$ ls
 
-# Authors
+file_1	file_2	file_3
 
-Millieny Torres
-Juan Gabriel Collazo
+$ cat file_2
+
+(Display file_2 content)
+
+$
+
+# Files
+
+The primary file being utilized is simple_shell.c wich contains the shell function itself. This file is linked to a header file named shell.h, which contains the libraries and prototypes of each function. In the AUTHORS file you will find the name and contact of the creators and in the man_1_simple_shell file there is a guide on how to use the created shell.
+
+# Authors 
+
+Millieny Torres and Juan Gabriel Collazo
