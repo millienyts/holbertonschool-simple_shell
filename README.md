@@ -1,5 +1,6 @@
-# Holberton Shell
+![image](https://github.com/millienyts/holbertonschool-simple_shell/assets/131397912/eab5d3d0-1988-43c1-8b78-8b777706c995)
 
+# Holberton Simple Shell Group Proyect
 This task integrates concepts covered throughout the course, serving as the culmination of the section focused exclusively on mastering C programming.
 
 # list of allowed functions and system calls
