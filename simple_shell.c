@@ -40,21 +40,30 @@ int main(void) {
             free(args);
             break;
         }
+	
+	/* Handle special case: copy and execute */
+	if (!strcmp(args[0], "cp")) {
+    	pid_t cp_pid;
 
-        /* Handle special case: copy and execute */
-        if (!strcmp(args[0], "cp")) {
-            int ret = system(line); /* Copy using system() */
-            if (ret != 0) {
-                perror("system");
-                free(args);
-                continue;
-            }
+    	if (args[1] == NULL || args[2] == NULL) {
+        fprintf(stderr, "Invalid cp command.\n");
+        free(args);
+        continue;
+    }
 
-            /* Extract copied filename and remaining arguments */
-            copied_file = strtok(line + 3, " ");
-            args[0] = strdup(copied_file);
-            free(copied_file);
-        }
+    /* Copy the file using cp */
+    cp_pid = fork();
+    if (cp_pid == 0) {
+        execlp("cp", "cp", args[1], args[2], (char *)NULL);
+        perror("cp");
+        exit(EXIT_FAILURE);
+    }
+    waitpid(cp_pid, NULL, 0);
+
+    /* Extract copied filename and remaining arguments */
+    copied_file = strdup(args[2]);
+    args[0] = copied_file;
+}
 
         /* Fork a child process */
         pid = fork();
@@ -63,14 +72,16 @@ int main(void) {
             /* Execute command with arguments */
             execvp(args[0], args);
             perror(args[0]);
+            free(args[0]);
             free(args);
-            exit(1);
+            exit(EXIT_FAILURE);
         } else if (pid == -1) { /* Error */
             perror("fork");
             free(args);
-            exit(1);
+            exit(EXIT_FAILURE);
         } else { /* Parent process */
             waitpid(pid, NULL, 0); /* Wait for child to finish */
+            free(args[0]);
             free(args);
         }
     }
