@@ -11,10 +11,11 @@ extern char **environ;
 */
 void print_prompt(int interactive)
 {
-	if (interactive) 
+	if (interactive)
 	{
-		char *dollar = "$";
-		printf("%s ", dollar);
+	char *dollar = "$";
+
+	printf("%s ", dollar);	/* Print the interactive prompt */
 	}
 }
 
@@ -40,10 +41,11 @@ int main(void)
 
 	int interactive = isatty(fileno(stdin));
 
-	while (1) 
+	while (1)
 	{
 	print_prompt(interactive);	/* Call the function to print the prompt */
-	if (getline(&command, &buffer, stdin) != -1)	/* Read the command line from standard input */
+	/* Read the command line from standard input */
+	if (getline(&command, &buffer, stdin) != -1)
 	{
 		length = strlen(command);
 	if (command[length - 1] == '\n')
@@ -55,7 +57,7 @@ int main(void)
 	if (strcmp(command, "exit") == 0)
 	{
 		free(command);
-		return 0;
+		return (0);
 	}
 
 		num_tokens = 0;
@@ -73,17 +75,18 @@ int main(void)
 		for (k = 0; k < num_tokens; k++)
 			;
 
-		if (access(args[0], X_OK) == 0) 
+		if (access(args[0], X_OK) == 0)
 		{
-		for (i = 0; i < 5; i++) 
+		for (i = 0; i < 5; i++)
 		{
 			execve(command, args, env);
 			break;
-                }
+		}
 		}
 		else
 	{
-		for (i = 0; i < 5; i++) {
+		for (i = 0; i < 5; i++)
+		{
 			strcpy(full_path, path[i]);
 			strcat(full_path, args[0]);
 
@@ -106,7 +109,7 @@ int main(void)
 
 	if (pid == 0)	/* Code executed by the child process */
 	{
-		if (execve(full_path, args, env) == -1) 
+		if (execve(full_path, args, env) == -1)
 		{
 		printf("Command not found\n");
 		exit(EXIT_FAILURE);
@@ -116,15 +119,15 @@ int main(void)
 	{
 		waitpid(pid, &status, 0);	/* Wait for the child process to finish */
 	}
-	} 
+	}
 	else	/* If a line cannot be read from standard input */
 	{
 	if (!interactive)
 		break;
 	printf("\n");
 	break;
-        }
+	}
 	}
 	free(command);	/* Free the memory allocated for the command */
-	return 0;
+	return (0);
 }
