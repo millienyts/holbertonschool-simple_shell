@@ -51,6 +51,7 @@ int main(void)
             /* Extract copied filename and remaining arguments */
             copied_file = strtok(line + 3, " ");
             args[0] = strdup(copied_file);
+	    free(copied_file);
         }
 
         /* Fork a child process */
