@@ -102,6 +102,10 @@ $ cat file_2
 
 $
 
+# Files
+
+The primary file being utilized is simple_shell.c wich contains the shell function itself. This file is linked to a header file named shell.h, which contains the libraries and prototypes of each function. In the AUTHORS file you will find the name and contact of the creators and in the man_1_simple_shell file there is a guide on how to use the created shell.
+
 # Authors 
 
 Millieny Torres and Juan Gabriel Collazo
